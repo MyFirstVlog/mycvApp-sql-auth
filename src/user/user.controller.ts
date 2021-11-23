@@ -2,8 +2,12 @@ import { Body, Controller, Get, Post, Patch, Param, Query, Delete, NotFoundExcep
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user-dto';
+import { Serialize } from '../interceptors/serialize.interceptor';
+import { UserDto } from './dto/user.dto';
+
 
 @Controller('auth')
+@Serialize(UserDto) //Verifica que sea una clase obligaotriamente
 export class UserController {
     constructor(private userService : UserService){}
 
@@ -20,22 +24,14 @@ export class UserController {
             console.log(error)
         }
     }
-    @UseInterceptors(ClassSerializerInterceptor)
+    // @UseInterceptors(new SerializeInterceptor(UserDto))
     @Get('/:id')
     async findOneUser(@Param('id') id: string ){
-        try {
-            const user = await this.userService.findOne(parseInt(id))
-            if(user){
-                return{
-                    ok : true,
-                    user
-                }
-            }
-            throw new NotFoundException('user Not Found')
-        } catch (error) {
-            throw new NotFoundException('user Not Found')
-            
-        }
+        const user = await this.userService.findOne(parseInt(id));
+        if (!user) {
+            throw new NotFoundException('user not found');
+          }
+          return user;
     }
     @Get()
     findAllUsers(@Query('email') email : string){

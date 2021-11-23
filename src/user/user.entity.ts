@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import {AfterInsert,AfterRemove, AfterUpdate,Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 
 //* Define lo que es un usuario, es como un esquema
@@ -9,7 +8,6 @@ export class User{
     @Column()
     email : string;
     @Column()
-    @Exclude()
     password: string;
     @AfterInsert()
     logInsert(){
