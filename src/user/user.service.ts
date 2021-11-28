@@ -16,11 +16,15 @@ export class UserService {
     }
     findOne(id : number){
         //const user = this.repo.findOne({email:'sad@dsa.com'}) //! Puede buscar en forma de condicional el find one 
+        if(!id){
+            return null;
+        }
        return this.repo.findOne(id)
     }
 
     find(email : string){
-        return this.repo.find({email})
+        console.log('esto es lo que me llega al service', email)
+        return this.repo.find({email});
     }
 
     async update(id : number, attrs: Partial<User>){
