@@ -1,14 +1,19 @@
-import { Body, Controller, Get, Post, Patch, Param, Query, Delete, NotFoundException, UseInterceptors,ClassSerializerInterceptor, Session } from '@nestjs/common';
+import { Body, Controller, Get, Post, Patch, Param, Query, Delete, 
+            NotFoundException, UseInterceptors,ClassSerializerInterceptor, Session,
+        } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user-dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dto/user.dto';
 import { AuthService } from './auth.service';
-
+import { CurrentUser } from './decorators/current-user.decorator';
+import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
+import { User } from './user.entity';
 
 @Controller('auth')
 @Serialize(UserDto) //Verifica que sea una clase obligaotriamente
+@UseInterceptors(CurrentUserInterceptor) //* Se ejecuta antes que la entrada a todos los ahndlers
 export class UserController {
     constructor(
             private userService : UserService,
@@ -25,16 +30,22 @@ export class UserController {
     //     console.log(color)
     //     return color;
     // }
+
+    //* @Get('/whoami')
+    //* whoAmI(@Session() session: any){
+    //*     const {userId} = session
+    //*     console.log(userId)
+    //*     return this.userService.findOne(userId)
+    //* }
+
+    //Crearemos un custom decorator
     @Get('/whoami')
-    whoAmI(@Session() session: any){
-        const {userId} = session
-        console.log(userId)
-        return this.userService.findOne(userId)
+    whoAmI(@CurrentUser() user: User){
+        return user;
     }
     @Post('/signout')
     signOut(@Session() session: any){
         session.userId = null;
-
     }
 
     @Post('/signup')
