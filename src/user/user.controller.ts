@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post, Patch, Param, Query, Delete, 
             NotFoundException, UseInterceptors,ClassSerializerInterceptor, Session,
+                UseGuards
         } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
@@ -8,12 +9,13 @@ import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dto/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
+// import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 import { User } from './user.entity';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 @Serialize(UserDto) //Verifica que sea una clase obligaotriamente
-@UseInterceptors(CurrentUserInterceptor) //* Se ejecuta antes que la entrada a todos los ahndlers
+// @UseInterceptors(CurrentUserInterceptor) //* Se ejecuta antes que la entrada a todos los ahndlers
 export class UserController {
     constructor(
             private userService : UserService,
@@ -39,6 +41,7 @@ export class UserController {
     //* }
 
     //Crearemos un custom decorator
+    @UseGuards(AuthGuard)
     @Get('/whoami')
     whoAmI(@CurrentUser() user: User){
         return user;

@@ -33,3 +33,4 @@ password --> salt --> hashing function --> database --> hashed and salted passwo
 ##### No se puede usar un injectable con un custom decorator
 
 No es capaz de entrar al DI, para ellos quedamos un interceptor, ahi hacemos uso del user service para luegfo enviarlo al custom decorator
+
