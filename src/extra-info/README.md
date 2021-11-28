@@ -34,3 +34,23 @@ password --> salt --> hashing function --> database --> hashed and salted passwo
 
 No es capaz de entrar al DI, para ellos quedamos un interceptor, ahi hacemos uso del user service para luegfo enviarlo al custom decorator
 
+##### Testing
+
+- Unit Testing
+
+Asegurarse de que los metodos de una clase estan funcionando de manera correcta
+
+Vamos hacer fake user services
+
+- Integration Testing
+
+Chequea el flujo completo de la aplicacion o de una caracteristica.
+
+* Providers:
+
+Lista de cosas que queremos registart en nuestro contenedor DI de testeo
+
+
+###### Hacer que el testing sea mas rapido, remplazamos ebn el packgae.json
+
+``` "test:watch": "jest --watch", por --> "test:watch": "jest --watch --maxWorkers=1",```
