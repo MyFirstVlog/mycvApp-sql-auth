@@ -28,4 +28,35 @@ describe('Authentication System', () => {
         expect(email).toBeDefined();
       });
   });
+
+  it('handles a signup request', () => {
+    return request(app.getHttpServer())
+      .post('/auth/signup')
+      .send({
+          email:'prueba3@prueba3.com', password: '123123'
+      })
+      .expect(201)
+      .then((res)=> {
+        const {id, email} = res.body;
+        expect(id).toBeDefined();
+        expect(email).toBeDefined();
+      });
+  });
+
+  it("sign up as a new user then get the currently logged in user", async ()=> {
+    const email = "prueba@prueba.com";
+    const res = await request(app.getHttpServer())
+      .post('/auth/signup')
+      .send({email, password: 'Prueba123'})
+      .expect(201)
+
+      const cookie = res.get('Set-Cookie');
+
+      const {body} = await request(app.getHttpServer())
+        .get('/auth/whoami')
+        .set('Cookie', cookie)
+        .expect(200)
+
+        expect(body.email).toEqual(email);
+  })
 });
