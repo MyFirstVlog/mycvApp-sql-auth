@@ -54,3 +54,7 @@ Lista de cosas que queremos registart en nuestro contenedor DI de testeo
 ###### Hacer que el testing sea mas rapido, remplazamos ebn el packgae.json
 
 ``` "test:watch": "jest --watch", por --> "test:watch": "jest --watch --maxWorkers=1",```
+
+###### Integration Testing
+
+- A complete instance of the app, making requests
