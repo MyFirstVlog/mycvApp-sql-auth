@@ -2,7 +2,7 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "email":"milena@gmail.com",
+    "email":"isabel@gmail.com",
     "password": "Cid3ne7",
     "malware" : "exec evilCorp.py"
 }

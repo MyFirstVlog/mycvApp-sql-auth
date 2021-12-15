@@ -58,3 +58,9 @@ Lista de cosas que queremos registart en nuestro contenedor DI de testeo
 ###### Integration Testing
 
 - A complete instance of the app, making requests
+
+##### Association
+
+1. One to One RelationShips
+2. One to Many / Many-to-One (the one we've)
+2. Many to Many
